@@ -26,5 +26,7 @@ android {
 dependencies {
     compile 'com.google.android.apps.dashclock:dashclock-api:+'
     compile 'com.mcxiaoke.volley:library:1.0.+@aar'
+    compile 'com.github.provigen:ProviGen-lib:1.7.+'
+    compile 'com.squareup.picasso:picasso:2.2.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
