@@ -2,7 +2,11 @@
 <resources>
 
     <string name="app_name">HackerSpace Status DashClock</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="status_message">Hackerspace is %1$s</string>
+    <string name="unknown">Unknown</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
 
 </resources>
