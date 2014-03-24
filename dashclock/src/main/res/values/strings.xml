@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HackerSpace Status DashClock</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">HackerSpace Status</string>
+    <string name="app_description">Choose your favorite HackerSpace to see its open state.</string>
 
     <string name="status_message">Hackerspace is %1$s</string>
     <string name="unknown">Unknown</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
+
+    <string name="setup">Setup</string>
+    <string name="settings_choose_title">Choose your Hackerspace</string>
+    <string name="settings_choose_message">Click here to choose your Hackerspace!</string>
+
+    <string name="error_title">Error!</string>
+    <string name="error_message">Error in getting the list of Hackerspaces.</string>
+
 
 </resources>

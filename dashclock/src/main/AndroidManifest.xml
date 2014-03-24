@@ -25,7 +25,7 @@
             <meta-data android:name="protocolVersion" android:value="2" />
             <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
-                android:value="Choose your HackerSpace to see its open state." />
+                android:value="@string/app_description" />
             <!-- A settings activity is optional -->
             <meta-data android:name="settingsActivity"
                 android:value=".ChooseHackerSpaceActivity" />

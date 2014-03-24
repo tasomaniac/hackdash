@@ -1,6 +1,9 @@
 package org.istanbulhs.dashclock;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -17,6 +20,43 @@ import org.json.JSONObject;
 
 public class StatusService extends DashClockExtension {
 
+    public static final String SETTINGS_CHANGED_EVENT = "settings_changed";
+    ForceUpdateReceiver mForceUpdateReceiver;
+
+    class ForceUpdateReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onUpdateData(UPDATE_REASON_SETTINGS_CHANGED);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mForceUpdateReceiver != null) {
+            try {
+                unregisterReceiver(mForceUpdateReceiver);
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    @Override
+    protected void onInitialize(boolean isReconnect) {
+        super.onInitialize(isReconnect);
+
+        if (mForceUpdateReceiver != null) {
+            try {
+                unregisterReceiver(mForceUpdateReceiver);
+            } catch (Exception e) {
+            }
+        }
+        IntentFilter intentFilter = new IntentFilter(SETTINGS_CHANGED_EVENT);
+        mForceUpdateReceiver = new ForceUpdateReceiver();
+        registerReceiver(mForceUpdateReceiver, intentFilter);
+    }
+
     @Override
     protected void onUpdateData(int reason) {
         //TODO If there is no hackerspace chosen display a message to chose one.
@@ -29,9 +69,9 @@ public class StatusService extends DashClockExtension {
             publishUpdate(new ExtensionData()
                     .visible(true)
                             //                .icon(R.drawable.ic_extension_example)
-                    .status("Setup")
-                    .expandedTitle("Choose your Hackerspace")
-                    .expandedBody("Click here to choose your Hackerspace!")
+                    .status(getString(R.string.setup))
+                    .expandedTitle(getString(R.string.settings_choose_title))
+                    .expandedBody(getString(R.string.settings_choose_message))
                     .clickIntent(new Intent(this, ChooseHackerSpaceActivity.class)));
         }
         else  {
@@ -50,7 +90,7 @@ public class StatusService extends DashClockExtension {
                                     open = state.optBoolean("open", false);
 
                                 final String status = getString(open == null ? R.string.unknown : (open ? R.string.open : R.string.closed));
-                                final String message = jsonObject.optString("message");
+                                final String message = state.optString("message");
 
                                 String logo = jsonObject.optString("logo"); //TODO try to integrate this logo
                                 publishHSUpdate(status, jsonObject.optString("space", name), message, jsonObject.optString("url"));
