@@ -7,14 +7,11 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="org.istanbulhs.dashclock.MainActivity"
+            android:name=".ChooseHackerSpaceActivity"
             android:exported="true"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:excludeFromRecents="true"
+            android:label="Choose Your HackerSpace"
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
         </activity>
 
         <service
@@ -28,10 +25,10 @@
             <meta-data android:name="protocolVersion" android:value="2" />
             <meta-data android:name="worldReadable" android:value="true" />
             <meta-data android:name="description"
-                android:value="@string/app_name" />
+                android:value="Choose your HackerSpace to see its open state." />
             <!-- A settings activity is optional -->
             <meta-data android:name="settingsActivity"
-                android:value=".MainActivity" />
+                android:value=".ChooseHackerSpaceActivity" />
         </service>
     </application>
 

@@ -32,7 +32,7 @@ public class StatusService extends DashClockExtension {
                     .status("Setup")
                     .expandedTitle("Choose your Hackerspace")
                     .expandedBody("Click here to choose your Hackerspace!")
-                    .clickIntent(new Intent(this, MainActivity.class)));
+                    .clickIntent(new Intent(this, ChooseHackerSpaceActivity.class)));
         }
         else  {
             String url = sp.getString("space_url", ""); //"https://istanbulhs.org/api/spaceapi";
