@@ -92,8 +92,11 @@ public class StatusService extends DashClockExtension {
                                 final String status = getString(open == null ? R.string.unknown : (open ? R.string.open : R.string.closed));
                                 final String message = state.optString("message");
 
-                                String logo = jsonObject.optString("logo"); //TODO try to integrate this logo
-                                publishHSUpdate(status, jsonObject.optString("space", name), message, jsonObject.optString("url"));
+
+//                                String logo = jsonObject.optString("logo"); //TODO try to integrate this logo
+                                publishHSUpdate(status, jsonObject.optString("space", name), message,
+                                        jsonObject.optString("url"),
+                                        open != null && open ? R.drawable.ic_action_good : R.drawable.ic_action_error);
 
                             }
                         }
@@ -109,7 +112,7 @@ public class StatusService extends DashClockExtension {
         }
     }
 
-    private void publishHSUpdate(String status, String title, String message, String url) {
+    private void publishHSUpdate(String status, String title, String message, String url, int icon) {
 
         if(!TextUtils.isEmpty(message))
             message = status + " | " + message;
@@ -119,7 +122,7 @@ public class StatusService extends DashClockExtension {
         // Publish the extension data update.
         publishUpdate(new ExtensionData()
                 .visible(true)
-//                .iconUri(iconUri)
+                .icon(icon)
                 .status(status)
                 .expandedTitle(title)
                 .expandedBody(message)
