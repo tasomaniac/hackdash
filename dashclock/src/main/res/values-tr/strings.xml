@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HackerSpace Status</string>
+    <string name="app_description">Açık mı diye sorgulamak için gittiğiniz Hackerspace\'i seçin.</string>
+
+    <string name="status_message">Hackerspace %1$s</string>
+    <string name="unknown">Durumu Bilinmiyor</string>
+    <string name="open">Açık</string>
+    <string name="closed">Kapalı</string>
+
+    <string name="setup">Kurulum</string>
+    <string name="settings_choose_title">Hackerspace\'ini seç</string>
+    <string name="settings_choose_message">Hackerspace\'ini seçmek için buraya tıkla!</string>
+
+    <string name="error_title">Hata!</string>
+    <string name="error_message">Hackerspaces listesi alınırken hata</string>
+
+
+</resources>
