@@ -1,4 +1,4 @@
-package org.istanbulhs.dashclock;
+package com.tasomaniac.hackerspace.status;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -68,7 +68,7 @@ public class StatusService extends DashClockExtension {
             // Publish the extension data update.
             publishUpdate(new ExtensionData()
                     .visible(true)
-                            //                .icon(R.drawable.ic_extension_example)
+                    .icon(R.drawable.ic_hackerspace)
                     .status(getString(R.string.setup))
                     .expandedTitle(getString(R.string.settings_choose_title))
                     .expandedBody(getString(R.string.settings_choose_message))
@@ -103,7 +103,7 @@ public class StatusService extends DashClockExtension {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-
+                            publishUpdate(new ExtensionData().visible(false));
                         }
                     }
             );

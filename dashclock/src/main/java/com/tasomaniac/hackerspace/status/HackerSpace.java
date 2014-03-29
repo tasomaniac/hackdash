@@ -1,4 +1,4 @@
-package org.istanbulhs.dashclock;
+package com.tasomaniac.hackerspace.status;
 
 /**
  * Created by tasomaniac on 26/3/14.

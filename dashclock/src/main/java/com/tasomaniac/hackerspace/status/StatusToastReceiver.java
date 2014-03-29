@@ -1,4 +1,4 @@
-package org.istanbulhs.dashclock;
+package com.tasomaniac.hackerspace.status;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
