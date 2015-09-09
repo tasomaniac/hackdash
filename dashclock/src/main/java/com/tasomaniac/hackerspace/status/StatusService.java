@@ -27,31 +27,27 @@ import timber.log.Timber;
 
 public class StatusService extends DashClockExtension {
 
-    public static final String SETTINGS_CHANGED_EVENT = BuildConfig.APPLICATION_ID + "settings_changed";
+    public static final String SETTINGS_CHANGED_EVENT = BuildConfig.APPLICATION_ID + ".settings_changed";
 
     @Inject
     HackerSpacePreference hackerSpacePreference;
     @Inject
     SpaceApiService spaceApiService;
 
-    ForceUpdateReceiver mForceUpdateReceiver;
-
-    class ForceUpdateReceiver extends BroadcastReceiver {
+    BroadcastReceiver mForceUpdateReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             onUpdateData(UPDATE_REASON_SETTINGS_CHANGED);
         }
-    }
+    };
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mForceUpdateReceiver != null) {
-            try {
-                unregisterReceiver(mForceUpdateReceiver);
-            } catch (Exception ignored) {
-            }
+        try {
+            unregisterReceiver(mForceUpdateReceiver);
+        } catch (Exception ignored) {
         }
     }
 
@@ -60,14 +56,11 @@ public class StatusService extends DashClockExtension {
         super.onInitialize(isReconnect);
         App.get(this).component().inject(this);
 
-        if (mForceUpdateReceiver != null) {
-            try {
-                unregisterReceiver(mForceUpdateReceiver);
-            } catch (Exception ignored) {
-            }
+        try {
+            unregisterReceiver(mForceUpdateReceiver);
+        } catch (Exception ignored) {
         }
         IntentFilter intentFilter = new IntentFilter(SETTINGS_CHANGED_EVENT);
-        mForceUpdateReceiver = new ForceUpdateReceiver();
         registerReceiver(mForceUpdateReceiver, intentFilter);
     }
 

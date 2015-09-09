@@ -14,9 +14,8 @@
         <activity
             android:name="com.tasomaniac.hackerspace.status.ChooseHackerSpaceActivity"
             android:exported="true"
-            android:excludeFromRecents="true"
             android:label="Choose Your HackerSpace"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar.TranslucentDecor">
         </activity>
 
         <receiver android:name="com.tasomaniac.hackerspace.status.StatusToastReceiver">
