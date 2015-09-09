@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 Properties local_properties = new Properties()
 File localPropertiesFile = project.rootProject.file('local.properties')
@@ -41,7 +42,6 @@ android {
     buildTypes {
         debug {
             ext.enableCrashlytics = false
-            applicationIdSuffix ".debug"
             signingConfig signingConfigs.debug
             versionNameSuffix "-debug"
         }
@@ -76,8 +76,20 @@ android {
 
 dependencies {
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
-    compile 'com.mcxiaoke.volley:library:1.0.+@aar'
+
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+    compile 'com.squareup.retrofit:converter-moshi:2.0.0-beta1'
+
+    compile 'com.jakewharton.timber:timber:3.1.0'
+
+    compile 'com.google.dagger:dagger:2.0.1'
+    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
+        transitive = true
+    }
+
     compile 'com.github.provigen:ProviGen-lib:1.7.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

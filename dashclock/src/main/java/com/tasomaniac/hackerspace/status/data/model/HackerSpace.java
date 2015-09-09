@@ -1,8 +1,5 @@
-package com.tasomaniac.hackerspace.status;
+package com.tasomaniac.hackerspace.status.data.model;
 
-/**
- * Created by tasomaniac on 26/3/14.
- */
 public class HackerSpace {
 
     public String space;

@@ -5,133 +5,120 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
+import com.tasomaniac.hackerspace.status.data.HackerSpacePreference;
+import com.tasomaniac.hackerspace.status.data.model.Directory;
+import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
+
+import javax.inject.Inject;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
 
 
 public class ChooseHackerSpaceActivity extends Activity implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
 
     private ProgressDialog pd;
 
-    private RequestQueue queue;
+    @Inject
+    SpaceApiService spaceApiService;
+    @Inject
+    HackerSpacePreference chosenSpacePref;
 
     private ArrayList<HackerSpace> spaces;
-    private HackerSpace choosen_space;
-    private int choosen_index;
+    private int chosenIndex;
+    private Call<Directory> directory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        App.get(this).component().inject(this);
 
         if (pd == null) {
             try {
-                pd = ProgressDialog.show(this, null, "Please wait!", true, true, new DialogInterface.OnCancelListener() {
+                pd = ProgressDialog.show(this, null, getString(R.string.please_wait), true, true, new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
+                        if (directory != null) {
+                            directory.cancel();
+                        }
                         finish();
-                        queue.cancelAll(ChooseHackerSpaceActivity.this);
                     }
                 });
             } catch (Exception ignored) {
             }
         }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        choosen_space = new HackerSpace(prefs.getString("space_name", ""), prefs.getString("space_url", ""));
-        queue = Volley.newRequestQueue(this);
-
-        JsonObjectRequest request = new JsonObjectRequest("http://spaceapi.net/directory.json?api=0.13", null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-
-                        if (jsonObject == null) {
-                            return;
-                        }
-
-                        spaces = new ArrayList<>();
-
-                        Iterator<String> iterator = jsonObject.keys();
-                        while (iterator.hasNext()) {
-                            String key = iterator.next();
-                            String value = jsonObject.optString(key);
-                            if (value != null) {
-                                spaces.add(new HackerSpace(key, value));
-                            }
-                        }
-                        Collections.sort(spaces, new Comparator<HackerSpace>() {
-                            @Override
-                            public int compare(HackerSpace lhs, HackerSpace rhs) {
-                                return lhs.toString().compareTo(rhs.toString());
-                            }
-                        });
-
-                        choosen_index = spaces.indexOf(choosen_space);
-
-                        try {
-                            new AlertDialog.Builder(ChooseHackerSpaceActivity.this)
-                                    .setTitle(R.string.settings_choose_title)
-                                    .setSingleChoiceItems(new ArrayAdapter<>(ChooseHackerSpaceActivity.this, android.R.layout.select_dialog_singlechoice, spaces), choosen_index, ChooseHackerSpaceActivity.this)
-                                    .setPositiveButton(android.R.string.ok, ChooseHackerSpaceActivity.this)
-                                    .setNegativeButton(android.R.string.cancel, ChooseHackerSpaceActivity.this)
-                                    .setCancelable(true)
-                                    .setOnCancelListener(ChooseHackerSpaceActivity.this)
-                                    .show();
-                        } catch (Exception ignored) {
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        try {
-                            new AlertDialog.Builder(ChooseHackerSpaceActivity.this)
-                                    .setTitle(R.string.error_title)
-                                    .setMessage(R.string.error_message)
-                                    .setNegativeButton(android.R.string.ok, ChooseHackerSpaceActivity.this)
-                                    .setOnCancelListener(ChooseHackerSpaceActivity.this)
-                                    .show();
-                        } catch (Exception e) {
-                            try {
-                                Toast.makeText(ChooseHackerSpaceActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
-                            } catch (Exception ignored) {
-                            }
-                        }
-                    }
+        directory = spaceApiService.directory();
+        directory.enqueue(new Callback<Directory>() {
+            @Override
+            public void onResponse(Response<Directory> response) {
+                if (!response.isSuccess()) {
+                    showError();
+                    return;
                 }
-        );
-        queue.add(request);
+
+                spaces = response.body();
+                Collections.sort(spaces, new Comparator<HackerSpace>() {
+                    @Override
+                    public int compare(HackerSpace lhs, HackerSpace rhs) {
+                        return lhs.toString().compareTo(rhs.toString());
+                    }
+                });
+
+                chosenIndex = spaces.indexOf(chosenSpacePref.getHackerSpace());
+
+                try {
+                    new AlertDialog.Builder(ChooseHackerSpaceActivity.this)
+                            .setTitle(R.string.settings_choose_title)
+                            .setSingleChoiceItems(new ArrayAdapter<>(ChooseHackerSpaceActivity.this, android.R.layout.select_dialog_singlechoice, spaces), chosenIndex, ChooseHackerSpaceActivity.this)
+                            .setPositiveButton(android.R.string.ok, ChooseHackerSpaceActivity.this)
+                            .setNegativeButton(android.R.string.cancel, ChooseHackerSpaceActivity.this)
+                            .setCancelable(true)
+                            .setOnCancelListener(ChooseHackerSpaceActivity.this)
+                            .show();
+                } catch (Exception ignored) {
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                showError();
+            }
+        });
+    }
+
+    private void showError() {
+        try {
+            new AlertDialog.Builder(ChooseHackerSpaceActivity.this)
+                    .setTitle(R.string.error_title)
+                    .setMessage(R.string.error_message)
+                    .setNegativeButton(android.R.string.ok, ChooseHackerSpaceActivity.this)
+                    .setOnCancelListener(ChooseHackerSpaceActivity.this)
+                    .show();
+        } catch (Exception e) {
+            try {
+                Toast.makeText(ChooseHackerSpaceActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
 
         if (which >= 0) {
-            choosen_index = which;
+            chosenIndex = which;
         } else if (which == DialogInterface.BUTTON_POSITIVE) {
-            HackerSpace chosen_space = choosen_index > 0 ? spaces.get(choosen_index) : null;
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit()
-                    .putString("space_name", chosen_space != null ? chosen_space.space : null)
-                    .putString("space_url", chosen_space != null ? chosen_space.url : null)
-                    .apply();
+            chosenSpacePref.saveHackerSpace(chosenIndex > 0 ? spaces.get(chosenIndex) : null);
             sendBroadcast(new Intent(StatusService.SETTINGS_CHANGED_EVENT));
 
             finish();

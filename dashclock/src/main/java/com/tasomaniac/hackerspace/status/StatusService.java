@@ -4,23 +4,36 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
+import com.tasomaniac.hackerspace.status.data.HackerSpacePreference;
+import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
+import com.tasomaniac.hackerspace.status.data.model.SpaceApiResponse;
+import com.tasomaniac.hackerspace.status.data.model.State;
 
-import org.json.JSONObject;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
+
+import javax.inject.Inject;
+
+import retrofit.Callback;
+import retrofit.Response;
+import timber.log.Timber;
 
 public class StatusService extends DashClockExtension {
 
-    public static final String SETTINGS_CHANGED_EVENT = "settings_changed";
+    public static final String SETTINGS_CHANGED_EVENT = BuildConfig.APPLICATION_ID + "settings_changed";
+
+    @Inject
+    HackerSpacePreference hackerSpacePreference;
+    @Inject
+    SpaceApiService spaceApiService;
+
     ForceUpdateReceiver mForceUpdateReceiver;
 
     class ForceUpdateReceiver extends BroadcastReceiver {
@@ -45,6 +58,7 @@ public class StatusService extends DashClockExtension {
     @Override
     protected void onInitialize(boolean isReconnect) {
         super.onInitialize(isReconnect);
+        App.get(this).component().inject(this);
 
         if (mForceUpdateReceiver != null) {
             try {
@@ -59,12 +73,10 @@ public class StatusService extends DashClockExtension {
 
     @Override
     protected void onUpdateData(int reason) {
-        //TODO If there is no hackerspace chosen display a message to chose one.
+        Timber.d("Update requested " + reason);
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        final String name = sp.getString("space_name", "");
-
-        if (TextUtils.isEmpty(name)) {
+        final HackerSpace chosenSpace = hackerSpacePreference.getHackerSpace();
+        if (TextUtils.isEmpty(chosenSpace.space)) {
             // Publish the extension data update.
             publishUpdate(new ExtensionData()
                     .visible(true)
@@ -74,51 +86,67 @@ public class StatusService extends DashClockExtension {
                     .expandedBody(getString(R.string.settings_choose_message))
                     .clickIntent(new Intent(this, ChooseHackerSpaceActivity.class)));
         } else {
-            String url = sp.getString("space_url", ""); //"https://istanbulhs.org/api/spaceapi";
-
-            JsonObjectRequest request = new JsonObjectRequest(url, null,
-
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(final JSONObject jsonObject) {
-
-                            JSONObject state = jsonObject.optJSONObject("state");
-                            if (state != null) {
-                                Boolean open = null;
-                                if (!state.isNull("open"))
-                                    open = state.optBoolean("open", false);
-
-                                final String status = getString(open == null ? R.string.unknown : (open ? R.string.open : R.string.closed));
-                                final String message = state.optString("message");
-
-
-//                                String logo = jsonObject.optString("logo"); //TODO try to integrate this logo
-                                publishHSUpdate(status, jsonObject.optString("space", name), message,
-                                        jsonObject.optString("url"),
-                                        open != null && open ? R.drawable.ic_action_good : R.drawable.ic_action_error);
-
-                            }
-                        }
-                    }, new Response.ErrorListener() {
+            spaceApiService.spaceStatus(chosenSpace.url).enqueue(new Callback<SpaceApiResponse>() {
                 @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    publishUpdate(new ExtensionData().visible(false));
-                }
-            }
-            );
+                public void onResponse(Response<SpaceApiResponse> response) {
+                    if (!response.isSuccess()) {
+                        try {
+                            Timber.e("Network Error %s", response.errorBody().string());
+                        } catch (IOException ignored) {
+                        }
+                        publishUpdate(new ExtensionData().visible(false));
+                        return;
+                    }
+                    final SpaceApiResponse body = response.body();
+                    final State state = body.getState();
+                    if (state == null) {
+                        return;
+                    }
 
-            Volley.newRequestQueue(this).add(request);
+                    final Boolean open = state.isOpen();
+                    final String status = getString(open == null
+                            ? R.string.unknown : (open ? R.string.open : R.string.closed));
+
+                    final StringBuilder message = new StringBuilder();
+
+                    if (!TextUtils.isEmpty(state.getMessage())) {
+                        message.append(status)
+                                .append(" | ")
+                                .append(state.getMessage());
+                    } else {
+                        message.append(getString(R.string.status_message, status));
+                    }
+
+                    if (state.getLastchange() != null) {
+                        message.append("\nLast Change: ");
+
+                        long when = state.getLastchange() * 1000;
+                        if (DateUtils.isToday(when)) {
+                            message.append(DateFormat.getTimeInstance(DateFormat.MEDIUM)
+                                    .format(new Date(when)));
+                        } else {
+                            message.append(DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+                                    DateFormat.MEDIUM).format(new Date(when)));
+                        }
+                    }
+
+//                  String logo = jsonObject.optString("logo"); //TODO try to integrate this logo
+                    publishHSUpdate(status,
+                            body.getSpace(),
+                            message.toString(),
+                            body.getUrl(),
+                            open != null && open ? R.drawable.ic_action_good : R.drawable.ic_action_error);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Timber.d(t, "Network error. ");
+                }
+            });
         }
     }
 
     private void publishHSUpdate(String status, String title, String message, String url, int icon) {
-
-        if (!TextUtils.isEmpty(message)) {
-            message = status + " | " + message;
-        } else {
-            message = getString(R.string.status_message, status);
-        }
-
         // Publish the extension data update.
         publishUpdate(new ExtensionData()
                 .visible(true)
