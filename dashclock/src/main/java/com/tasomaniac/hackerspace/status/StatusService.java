@@ -37,7 +37,7 @@ public class StatusService extends DashClockExtension {
         if (mForceUpdateReceiver != null) {
             try {
                 unregisterReceiver(mForceUpdateReceiver);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
     }
@@ -49,7 +49,7 @@ public class StatusService extends DashClockExtension {
         if (mForceUpdateReceiver != null) {
             try {
                 unregisterReceiver(mForceUpdateReceiver);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         IntentFilter intentFilter = new IntentFilter(SETTINGS_CHANGED_EVENT);
@@ -64,7 +64,7 @@ public class StatusService extends DashClockExtension {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         final String name = sp.getString("space_name", "");
 
-        if(TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name)) {
             // Publish the extension data update.
             publishUpdate(new ExtensionData()
                     .visible(true)
@@ -73,8 +73,7 @@ public class StatusService extends DashClockExtension {
                     .expandedTitle(getString(R.string.settings_choose_title))
                     .expandedBody(getString(R.string.settings_choose_message))
                     .clickIntent(new Intent(this, ChooseHackerSpaceActivity.class)));
-        }
-        else  {
+        } else {
             String url = sp.getString("space_url", ""); //"https://istanbulhs.org/api/spaceapi";
 
             JsonObjectRequest request = new JsonObjectRequest(url, null,
@@ -84,9 +83,9 @@ public class StatusService extends DashClockExtension {
                         public void onResponse(final JSONObject jsonObject) {
 
                             JSONObject state = jsonObject.optJSONObject("state");
-                            if(state != null) {
+                            if (state != null) {
                                 Boolean open = null;
-                                if(!state.isNull("open"))
+                                if (!state.isNull("open"))
                                     open = state.optBoolean("open", false);
 
                                 final String status = getString(open == null ? R.string.unknown : (open ? R.string.open : R.string.closed));
@@ -101,11 +100,11 @@ public class StatusService extends DashClockExtension {
                             }
                         }
                     }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            publishUpdate(new ExtensionData().visible(false));
-                        }
-                    }
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    publishUpdate(new ExtensionData().visible(false));
+                }
+            }
             );
 
             Volley.newRequestQueue(this).add(request);
@@ -114,10 +113,11 @@ public class StatusService extends DashClockExtension {
 
     private void publishHSUpdate(String status, String title, String message, String url, int icon) {
 
-        if(!TextUtils.isEmpty(message))
+        if (!TextUtils.isEmpty(message)) {
             message = status + " | " + message;
-        else
+        } else {
             message = getString(R.string.status_message, status);
+        }
 
         // Publish the extension data update.
         publishUpdate(new ExtensionData()

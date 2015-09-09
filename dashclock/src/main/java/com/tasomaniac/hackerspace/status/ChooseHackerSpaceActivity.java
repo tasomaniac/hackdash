@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.apps.dashclock.api.DashClockExtension;
 
 import org.json.JSONObject;
 
@@ -41,7 +40,7 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
         super.onCreate(savedInstanceState);
 
 
-        if(pd == null) {
+        if (pd == null) {
             try {
                 pd = ProgressDialog.show(this, null, "Please wait!", true, true, new DialogInterface.OnCancelListener() {
                     @Override
@@ -50,7 +49,8 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
                         queue.cancelAll(ChooseHackerSpaceActivity.this);
                     }
                 });
-            } catch (Exception e){}
+            } catch (Exception ignored) {
+            }
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -62,15 +62,17 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
                     @Override
                     public void onResponse(JSONObject jsonObject) {
 
-                        if(jsonObject == null) return;
+                        if (jsonObject == null) {
+                            return;
+                        }
 
                         spaces = new ArrayList<>();
 
                         Iterator<String> iterator = jsonObject.keys();
-                        while(iterator.hasNext()) {
+                        while (iterator.hasNext()) {
                             String key = iterator.next();
                             String value = jsonObject.optString(key);
-                            if(value != null) {
+                            if (value != null) {
                                 spaces.add(new HackerSpace(key, value));
                             }
                         }
@@ -92,7 +94,7 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
                                     .setCancelable(true)
                                     .setOnCancelListener(ChooseHackerSpaceActivity.this)
                                     .show();
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
                         }
                     }
                 },
@@ -109,7 +111,8 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
                         } catch (Exception e) {
                             try {
                                 Toast.makeText(ChooseHackerSpaceActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
-                            } catch (Exception e2) {}
+                            } catch (Exception ignored) {
+                            }
                         }
                     }
                 }
@@ -120,10 +123,9 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
     @Override
     public void onClick(DialogInterface dialog, int which) {
 
-        if(which >= 0) {
+        if (which >= 0) {
             choosen_index = which;
-        }
-        else if(which == DialogInterface.BUTTON_POSITIVE) {
+        } else if (which == DialogInterface.BUTTON_POSITIVE) {
             HackerSpace chosen_space = choosen_index > 0 ? spaces.get(choosen_index) : null;
             PreferenceManager.getDefaultSharedPreferences(this)
                     .edit()
@@ -133,9 +135,9 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
             sendBroadcast(new Intent(StatusService.SETTINGS_CHANGED_EVENT));
 
             finish();
-        }
-        else
+        } else {
             finish();
+        }
     }
 
     @Override
