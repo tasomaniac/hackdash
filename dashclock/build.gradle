@@ -86,10 +86,10 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.0.1'
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
+    compile 'com.tasomaniac:contentloadingprogressdialog:0.2'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
         transitive = true
     }
 
-    compile 'com.github.provigen:ProviGen-lib:1.7.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

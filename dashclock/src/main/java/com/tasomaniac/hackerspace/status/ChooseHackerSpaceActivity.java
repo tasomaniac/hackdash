@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.tasomaniac.android.widget.ContentLoadingProgressDialog;
 import com.tasomaniac.hackerspace.status.data.HackerSpacePreference;
 import com.tasomaniac.hackerspace.status.data.model.Directory;
 import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
@@ -22,6 +23,7 @@ import javax.inject.Inject;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
+import timber.log.Timber;
 
 
 public class ChooseHackerSpaceActivity extends Activity implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
@@ -44,7 +46,7 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
 
         if (pd == null) {
             try {
-                pd = ProgressDialog.show(this, null, getString(R.string.please_wait), true, true, new DialogInterface.OnCancelListener() {
+                pd = ContentLoadingProgressDialog.show(this, null, getString(R.string.please_wait), true, true, new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         if (directory != null) {
@@ -54,9 +56,10 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
                     }
                 });
             } catch (Exception ignored) {
+                Timber.d(ignored, "Exception");
             }
         }
-
+        Timber.d("Directories requested");
         directory = spaceApiService.directory();
         directory.enqueue(new Callback<Directory>() {
             @Override
@@ -77,6 +80,12 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
                 chosenIndex = spaces.indexOf(chosenSpacePref.getHackerSpace());
 
                 try {
+                    pd.dismiss();
+                } catch (Exception ignored) {
+                }
+                pd = null;
+
+                try {
                     new AlertDialog.Builder(ChooseHackerSpaceActivity.this)
                             .setTitle(R.string.settings_choose_title)
                             .setSingleChoiceItems(new ArrayAdapter<>(ChooseHackerSpaceActivity.this, android.R.layout.select_dialog_singlechoice, spaces), chosenIndex, ChooseHackerSpaceActivity.this)
@@ -87,6 +96,8 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
                             .show();
                 } catch (Exception ignored) {
                 }
+
+                Timber.d("Directories response");
             }
 
             @Override
