@@ -7,7 +7,9 @@ import android.preference.PreferenceManager;
 import com.squareup.moshi.Moshi;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Response;
 import com.tasomaniac.hackerspace.status.data.ChosenHackerSpaceName;
 import com.tasomaniac.hackerspace.status.data.ChosenHackerSpaceUrl;
 import com.tasomaniac.hackerspace.status.data.DirectoryConverter;
@@ -15,6 +17,7 @@ import com.tasomaniac.hackerspace.status.data.StringPreference;
 import com.tasomaniac.hackerspace.status.data.model.Directory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -72,6 +75,16 @@ final class AppModule {
         File cacheDir = new File(app.getCacheDir(), "http");
         Cache cache = new Cache(cacheDir, 50 * 1024 * 1024);
         client.setCache(cache);
+
+        /** Dangerous interceptor that rewrites the server's cache-control header. */
+        client.interceptors().add(new Interceptor() {
+            @Override public Response intercept(Chain chain) throws IOException {
+                Response originalResponse = chain.proceed(chain.request());
+                return originalResponse.newBuilder()
+                        .header("Cache-Control", "max-age=300")
+                        .build();
+            }
+        });
 
         return client;
     }
