@@ -48,7 +48,6 @@ public class StatusToastReceiver extends BroadcastReceiver {
 
             @Override
             public void onFailure(Throwable t) {
-
             }
         });
     }
