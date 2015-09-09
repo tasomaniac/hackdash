@@ -1,12 +1,12 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 19
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -17,17 +17,16 @@ android {
     }
     buildTypes {
         release {
-            debuggable false
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 }
 
 dependencies {
-    compile 'com.google.android.apps.dashclock:dashclock-api:+'
+    compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.mcxiaoke.volley:library:1.0.+@aar'
-    compile 'com.github.provigen:ProviGen-lib:1.7.+'
-    compile 'com.squareup.picasso:picasso:2.2.+'
+    compile 'com.github.provigen:ProviGen-lib:1.7.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
