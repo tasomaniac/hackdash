@@ -34,6 +34,7 @@ public class StatusService extends DashClockExtension {
     HackerSpacePreference hackerSpacePreference;
     @Inject
     SpaceApiService spaceApiService;
+    @Inject Analytics analytics;
 
     BroadcastReceiver mForceUpdateReceiver = new BroadcastReceiver() {
 
@@ -130,6 +131,9 @@ public class StatusService extends DashClockExtension {
                             message.toString(),
                             body.getUrl(),
                             open != null && open ? R.drawable.ic_action_good : R.drawable.ic_action_error);
+
+                    analytics.sendScreenView("Status Update");
+                    analytics.sendEvent("Status Update", "Publish Update", body.getSpace());
                 }
 
                 @Override

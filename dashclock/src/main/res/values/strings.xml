@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HackerSpace Status</string>
+    <string name="app_name" translatable="false">HackDash</string>
+    <string name="dashclock_label">Hackerspace Status</string>
     <string name="app_description">Choose your favorite HackerSpace to see its open state.</string>
 
     <string name="status_message">Hackerspace is %1$s</string>
@@ -17,18 +18,17 @@
 
     <string name="error_title">Error!</string>
     <string name="error_message">Error in getting the list of Hackerspaces.</string>
-    <string name="please_wait">Please wait!</string>
 
     <string name="settings_label">HackDash Settings</string>
 
     <string name="pref_title_integrations">Integrations</string>
-    <string name="pref_key_dashclock_integration">pref_dashclock_integration</string>
+    <string name="pref_key_dashclock_integration" translatable="false">pref_dashclock_integration</string>
     <string name="pref_title_dashclock_integration">DashClock App Integration</string>
     <string name="pref_summary_dashclock_installed">Open DashClock settings to add "Hackerspace Status".</string>
     <string name="pref_summary_dashclock_not_installed">Click here to install DashClock Widget and then enable this app inside DashClock.</string>
 
-    <string name="pref_key_space_name">space_name</string>
-    <string name="pref_key_space_url">space_url</string>
+    <string name="pref_key_space_name" translatable="false">space_name</string>
+    <string name="pref_key_space_url" translatable="false">space_url</string>
 
 
 </resources>

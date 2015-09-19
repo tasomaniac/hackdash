@@ -30,6 +30,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.View;
 import android.widget.Toast;
 
+import com.tasomaniac.hackerspace.status.Analytics;
 import com.tasomaniac.hackerspace.status.App;
 import com.tasomaniac.hackerspace.status.R;
 import com.tasomaniac.hackerspace.status.SpaceApiService;
@@ -54,6 +55,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
     SpaceApiService spaceApiService;
     @Inject
     HackerSpacePreference chosenSpacePref;
+    @Inject
+    Analytics analytics;
 
     private ArrayList<HackerSpace> spaces;
 
@@ -68,6 +71,15 @@ public class SettingsFragment extends PreferenceFragmentCompat
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            analytics.sendScreenView("Settings Page");
+        }
     }
 
     @Override
@@ -165,6 +177,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
             chosenSpacePref.saveHackerSpace(chosenIndex > 0 ? spaces.get(chosenIndex) : null);
 
             getActivity().sendBroadcast(new Intent(StatusService.SETTINGS_CHANGED_EVENT));
+            analytics.sendEvent("Settings", "Chosen Space",
+                    chosenSpacePref.getHackerSpace().toString());
         }
     }
 

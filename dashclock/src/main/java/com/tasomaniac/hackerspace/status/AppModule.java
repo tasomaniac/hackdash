@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.moshi.Moshi;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.HttpUrl;
@@ -114,5 +116,16 @@ final class AppModule {
 
     @Provides @Singleton SpaceApiService provideSpaceApiService(Retrofit retrofit) {
         return retrofit.create(SpaceApiService.class);
+    }
+
+    @Provides @Singleton Analytics provideAnalytics() {
+        if (BuildConfig.DEBUG) {
+            return new Analytics.DebugAnalytics();
+        }
+
+        GoogleAnalytics googleAnalytics = GoogleAnalytics.getInstance(app);
+        Tracker tracker = googleAnalytics.newTracker(BuildConfig.ANALYTICS_KEY);
+        tracker.setSessionTimeout(300); // ms? s? better be s.
+        return new Analytics.GoogleAnalytics(tracker);
     }
 }

@@ -16,7 +16,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        buildComponentAndInject();
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
@@ -24,6 +23,8 @@ public class App extends Application {
             Fabric.with(this, new Crashlytics());
             Timber.plant(new CrashReportingTree());
         }
+
+        buildComponentAndInject();
     }
 
     public void buildComponentAndInject() {
