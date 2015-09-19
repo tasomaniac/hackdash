@@ -1,5 +1,7 @@
 package com.tasomaniac.hackerspace.status.data.model;
 
+import android.support.annotation.NonNull;
+
 public class HackerSpace implements Comparable {
 
     public String space;
@@ -12,7 +14,7 @@ public class HackerSpace implements Comparable {
 
     @Override
     public boolean equals(Object o) {
-        return o != null && o instanceof HackerSpace && this.url != null && this.url.equals( ((HackerSpace)o).url );
+        return o != null && o instanceof HackerSpace && this.compareTo(o) == 0;
     }
 
     @Override
@@ -21,7 +23,7 @@ public class HackerSpace implements Comparable {
     }
 
     @Override
-    public int compareTo(Object another) {
+    public int compareTo(@NonNull Object another) {
         return toString().compareTo(another.toString());
     }
 }

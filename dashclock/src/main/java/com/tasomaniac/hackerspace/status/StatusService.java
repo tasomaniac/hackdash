@@ -14,6 +14,7 @@ import com.tasomaniac.hackerspace.status.data.HackerSpacePreference;
 import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
 import com.tasomaniac.hackerspace.status.data.model.SpaceApiResponse;
 import com.tasomaniac.hackerspace.status.data.model.State;
+import com.tasomaniac.hackerspace.status.ui.SettingsActivity;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -77,7 +78,7 @@ public class StatusService extends DashClockExtension {
                     .status(getString(R.string.setup))
                     .expandedTitle(getString(R.string.settings_choose_title))
                     .expandedBody(getString(R.string.settings_choose_message))
-                    .clickIntent(new Intent(this, ChooseHackerSpaceActivity.class)));
+                    .clickIntent(new Intent(this, SettingsActivity.class)));
         } else {
             spaceApiService.spaceStatus(chosenSpace.url).enqueue(new Callback<SpaceApiResponse>() {
                 @Override

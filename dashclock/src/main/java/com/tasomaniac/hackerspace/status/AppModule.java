@@ -2,6 +2,7 @@ package com.tasomaniac.hackerspace.status;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import com.squareup.moshi.Moshi;
@@ -40,18 +41,25 @@ final class AppModule {
     }
 
     @Provides @Singleton
+    PackageManager providePackageManager() {
+        return app.getPackageManager();
+    }
+
+    @Provides @Singleton
     SharedPreferences provideSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(app);
     }
 
     @Provides @Singleton @ChosenHackerSpaceName StringPreference provideChosenSpaceNamePreference(
+            Application app,
             SharedPreferences prefs) {
-        return new StringPreference(prefs, "space_name", null);
+        return new StringPreference(prefs, app.getString(R.string.pref_key_space_name), null);
     }
 
     @Provides @Singleton @ChosenHackerSpaceUrl StringPreference provideChosenSpaceUrlPreference(
+            Application app,
             SharedPreferences prefs) {
-        return new StringPreference(prefs, "space_url", null);
+        return new StringPreference(prefs, app.getString(R.string.pref_key_space_url), null);
     }
 
     @Provides @Singleton Moshi provideMoshi() {

@@ -9,14 +9,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:name=".App"
-        android:theme="@android:style/Theme.DeviceDefault.Light"
+        android:theme="@style/Theme.HackDash"
         android:label="@string/app_name" >
-        <activity
-            android:name="com.tasomaniac.hackerspace.status.ChooseHackerSpaceActivity"
-            android:exported="true"
-            android:label="Choose Your HackerSpace"
-            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar.TranslucentDecor">
-        </activity>
 
         <receiver android:name="com.tasomaniac.hackerspace.status.StatusToastReceiver">
             <intent-filter>
@@ -39,8 +33,18 @@
                 android:value="@string/app_description" />
             <!-- A settings activity is optional -->
             <meta-data android:name="settingsActivity"
-                android:value=".ChooseHackerSpaceActivity" />
+                android:value=".ui.SettingsActivity" />
         </service>
+
+        <activity
+          android:name=".ui.SettingsActivity"
+          android:launchMode="singleTask">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <meta-data
           android:name="io.fabric.ApiKey"

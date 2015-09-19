@@ -9,6 +9,8 @@
     <string name="open">Open</string>
     <string name="closed">Closed</string>
 
+    <string name="done">Done</string>
+
     <string name="setup">Setup</string>
     <string name="settings_choose_title">Choose your Hackerspace</string>
     <string name="settings_choose_message">Click here to choose your Hackerspace!</string>
@@ -16,6 +18,17 @@
     <string name="error_title">Error!</string>
     <string name="error_message">Error in getting the list of Hackerspaces.</string>
     <string name="please_wait">Please wait!</string>
+
+    <string name="settings_label">HackDash Settings</string>
+
+    <string name="pref_title_integrations">Integrations</string>
+    <string name="pref_key_dashclock_integration">pref_dashclock_integration</string>
+    <string name="pref_title_dashclock_integration">DashClock App Integration</string>
+    <string name="pref_summary_dashclock_installed">Open DashClock settings to add "Hackerspace Status".</string>
+    <string name="pref_summary_dashclock_not_installed">Click here to install DashClock Widget and then enable this app inside DashClock.</string>
+
+    <string name="pref_key_space_name">space_name</string>
+    <string name="pref_key_space_url">space_url</string>
 
 
 </resources>
