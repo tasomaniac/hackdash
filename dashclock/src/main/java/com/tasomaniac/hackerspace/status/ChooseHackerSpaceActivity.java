@@ -16,7 +16,6 @@ import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import javax.inject.Inject;
 
@@ -70,12 +69,7 @@ public class ChooseHackerSpaceActivity extends Activity implements DialogInterfa
                 }
 
                 spaces = response.body();
-                Collections.sort(spaces, new Comparator<HackerSpace>() {
-                    @Override
-                    public int compare(HackerSpace lhs, HackerSpace rhs) {
-                        return lhs.toString().compareTo(rhs.toString());
-                    }
-                });
+                Collections.sort(spaces);
 
                 chosenIndex = spaces.indexOf(chosenSpacePref.getHackerSpace());
 

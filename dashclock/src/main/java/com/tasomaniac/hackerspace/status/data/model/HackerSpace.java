@@ -1,6 +1,6 @@
 package com.tasomaniac.hackerspace.status.data.model;
 
-public class HackerSpace {
+public class HackerSpace implements Comparable {
 
     public String space;
     public String url;
@@ -18,5 +18,10 @@ public class HackerSpace {
     @Override
     public String toString() {
         return space;
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        return toString().compareTo(another.toString());
     }
 }
