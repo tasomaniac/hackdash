@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HackerSpace Status</string>
+    <string name="dashclock_label">HackerSpace Status</string>
     <string name="app_description">Açık mı diye sorgulamak için gittiğiniz Hackerspace\'i seçin.</string>
 
     <string name="status_message">Hackerspace %1$s</string>
@@ -15,7 +15,12 @@
 
     <string name="error_title">Hata!</string>
     <string name="error_message">Hackerspaces listesi alınırken hata</string>
-    <string name="please_wait">Lütfen bekleyiniz!</string>
+    <string name="done">Bitti</string>
+    <string name="pref_summary_dashclock_installed">DashClock ayarlarını açıp "Hackerspace Status"ü ekleyiniz.</string>
+    <string name="pref_summary_dashclock_not_installed">DashClock uygulamasını indirmek için tıklayın!</string>
+    <string name="pref_title_dashclock_integration">DashClock Entegrasyonu</string>
+    <string name="pref_title_integrations">Entegrasyonlar</string>
+    <string name="settings_label">HackDash Ayarlar</string>
 
 
 </resources>
