@@ -22,7 +22,7 @@
         <service
             android:name="com.tasomaniac.hackerspace.status.StatusService"
             android:icon="@drawable/ic_hackerspace"
-            android:label="@string/app_name"
+            android:label="@string/dashclock_label"
             android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
