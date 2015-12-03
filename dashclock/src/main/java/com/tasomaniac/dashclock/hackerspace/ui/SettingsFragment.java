@@ -30,6 +30,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.tasomaniac.dashclock.hackerspace.Analytics;
 import com.tasomaniac.dashclock.hackerspace.App;
 import com.tasomaniac.dashclock.hackerspace.R;
@@ -67,9 +68,10 @@ public class SettingsFragment extends PreferenceFragmentCompat
     public SettingsFragment() {
     }
 
-    public static SettingsFragment newInstance() {
+    public static SettingsFragment newInstance(boolean fromDashClock) {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
+        args.putBoolean(DashClockExtension.EXTRA_FROM_DASHCLOCK_SETTINGS, fromDashClock);
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,6 +95,11 @@ public class SettingsFragment extends PreferenceFragmentCompat
                 spacesListPreference, chosenSpacePref.getHackerSpace().space);
 
         dashclockPref = (IntegrationPreference) findPreference(R.string.pref_key_dashclock_integration);
+
+        boolean fromDashClock = getArguments().getBoolean(DashClockExtension.EXTRA_FROM_DASHCLOCK_SETTINGS, false);
+        if (fromDashClock) {
+            dashclockPref.setVisible(false);
+        }
     }
 
     @Override

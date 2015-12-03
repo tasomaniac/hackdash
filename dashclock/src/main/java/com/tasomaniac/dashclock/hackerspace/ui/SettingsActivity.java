@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.tasomaniac.dashclock.hackerspace.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -14,6 +15,8 @@ public class SettingsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        boolean fromDashClock = getIntent().getBooleanExtra(DashClockExtension.EXTRA_FROM_DASHCLOCK_SETTINGS, false);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_done);
@@ -27,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container,
-                            SettingsFragment.newInstance())
+                            SettingsFragment.newInstance(fromDashClock))
                     .commit();
         }
     }

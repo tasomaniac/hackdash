@@ -47,9 +47,7 @@
         android:value=".ui.SettingsActivity"/>
     </service>
 
-    <activity
-      android:name=".ui.SettingsActivity"
-      android:launchMode="singleTop">
+    <activity android:name=".ui.SettingsActivity">
 
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
