@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status.data;
+package com.tasomaniac.dashclock.hackerspace.data;
 
 import java.lang.annotation.Retention;
 

@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status;
+package com.tasomaniac.dashclock.hackerspace;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.tasomaniac.hackerspace.status.data.HackerSpacePreference;
-import com.tasomaniac.hackerspace.status.data.model.SpaceApiResponse;
+import com.tasomaniac.dashclock.hackerspace.data.HackerSpacePreference;
+import com.tasomaniac.dashclock.hackerspace.data.model.SpaceApiResponse;
 
 import javax.inject.Inject;
 
 import retrofit.Callback;
 import retrofit.Response;
+import retrofit.Retrofit;
 
 public class StatusToastReceiver extends BroadcastReceiver {
 
@@ -32,7 +33,7 @@ public class StatusToastReceiver extends BroadcastReceiver {
 
         spaceApiService.spaceStatus(url).enqueue(new Callback<SpaceApiResponse>() {
             @Override
-            public void onResponse(Response<SpaceApiResponse> response) {
+            public void onResponse(Response<SpaceApiResponse> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
                     final SpaceApiResponse body = response.body();
                     final String name = body.getSpace();

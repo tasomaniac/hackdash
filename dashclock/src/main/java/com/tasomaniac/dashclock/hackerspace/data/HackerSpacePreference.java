@@ -1,6 +1,6 @@
-package com.tasomaniac.hackerspace.status.data;
+package com.tasomaniac.dashclock.hackerspace.data;
 
-import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
+import com.tasomaniac.dashclock.hackerspace.data.model.HackerSpace;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

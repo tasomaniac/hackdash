@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status;
+package com.tasomaniac.dashclock.hackerspace;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;

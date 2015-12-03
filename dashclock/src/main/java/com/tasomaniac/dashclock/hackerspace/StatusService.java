@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status;
+package com.tasomaniac.dashclock.hackerspace;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,11 +10,11 @@ import android.text.format.DateUtils;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
-import com.tasomaniac.hackerspace.status.data.HackerSpacePreference;
-import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
-import com.tasomaniac.hackerspace.status.data.model.SpaceApiResponse;
-import com.tasomaniac.hackerspace.status.data.model.State;
-import com.tasomaniac.hackerspace.status.ui.SettingsActivity;
+import com.tasomaniac.dashclock.hackerspace.data.HackerSpacePreference;
+import com.tasomaniac.dashclock.hackerspace.data.model.HackerSpace;
+import com.tasomaniac.dashclock.hackerspace.data.model.SpaceApiResponse;
+import com.tasomaniac.dashclock.hackerspace.data.model.State;
+import com.tasomaniac.dashclock.hackerspace.ui.SettingsActivity;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -24,6 +24,7 @@ import javax.inject.Inject;
 
 import retrofit.Callback;
 import retrofit.Response;
+import retrofit.Retrofit;
 import timber.log.Timber;
 
 public class StatusService extends DashClockExtension {
@@ -83,7 +84,7 @@ public class StatusService extends DashClockExtension {
         } else {
             spaceApiService.spaceStatus(chosenSpace.url).enqueue(new Callback<SpaceApiResponse>() {
                 @Override
-                public void onResponse(Response<SpaceApiResponse> response) {
+                public void onResponse(Response<SpaceApiResponse> response, Retrofit retrofit) {
                     if (!response.isSuccess()) {
                         try {
                             Timber.e("Network Error %s", response.errorBody().string());

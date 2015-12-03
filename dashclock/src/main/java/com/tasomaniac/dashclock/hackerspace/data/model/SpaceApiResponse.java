@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status.data.model;
+package com.tasomaniac.dashclock.hackerspace.data.model;
 
 /**
  * Created by tasomaniac on 9/9/15.

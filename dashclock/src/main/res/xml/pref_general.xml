@@ -29,7 +29,7 @@
     android:title="@string/pref_title_integrations">
 
     <!-- dashclock App Check Preference-->
-    <com.tasomaniac.hackerspace.status.ui.IntegrationPreference
+    <com.tasomaniac.dashclock.hackerspace.ui.IntegrationPreference
       android:key="@string/pref_key_dashclock_integration"
       android:persistent="false"
       android:defaultValue="true"
@@ -39,7 +39,7 @@
       <intent
         android:targetClass="com.google.android.apps.dashclock.configuration.ConfigurationActivity"
         android:targetPackage="net.nurik.roman.dashclock"/>
-    </com.tasomaniac.hackerspace.status.ui.IntegrationPreference>
+    </com.tasomaniac.dashclock.hackerspace.ui.IntegrationPreference>
 
   </PreferenceCategory>
 

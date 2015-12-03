@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status.data;
+package com.tasomaniac.dashclock.hackerspace.data;
 
 import android.content.SharedPreferences;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tasomaniac.hackerspace.status.util;
+package com.tasomaniac.dashclock.hackerspace.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,7 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 
-import com.tasomaniac.hackerspace.status.ui.IntegrationPreference;
+import com.tasomaniac.dashclock.hackerspace.ui.IntegrationPreference;
 
 
 public final class AppInstallEnabler {

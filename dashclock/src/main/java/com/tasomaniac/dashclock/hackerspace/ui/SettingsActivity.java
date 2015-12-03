@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status.ui;
+package com.tasomaniac.dashclock.hackerspace.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.tasomaniac.hackerspace.status.R;
+import com.tasomaniac.dashclock.hackerspace.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

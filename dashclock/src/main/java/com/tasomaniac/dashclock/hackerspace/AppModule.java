@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status;
+package com.tasomaniac.dashclock.hackerspace;
 
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -13,11 +13,11 @@ import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Response;
-import com.tasomaniac.hackerspace.status.data.ChosenHackerSpaceName;
-import com.tasomaniac.hackerspace.status.data.ChosenHackerSpaceUrl;
-import com.tasomaniac.hackerspace.status.data.DirectoryConverter;
-import com.tasomaniac.hackerspace.status.data.StringPreference;
-import com.tasomaniac.hackerspace.status.data.model.Directory;
+import com.tasomaniac.dashclock.hackerspace.data.ChosenHackerSpaceName;
+import com.tasomaniac.dashclock.hackerspace.data.ChosenHackerSpaceUrl;
+import com.tasomaniac.dashclock.hackerspace.data.DirectoryConverter;
+import com.tasomaniac.dashclock.hackerspace.data.StringPreference;
+import com.tasomaniac.dashclock.hackerspace.data.model.Directory;
 
 import java.io.File;
 import java.io.IOException;

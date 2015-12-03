@@ -1,54 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tasomaniac.hackerspace.status">
+<manifest package="com.tasomaniac.dashclock.hackerspace"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:name=".App"
-        android:theme="@style/Theme.HackDash"
-        android:label="@string/app_name" >
+  <application
+    android:name=".App"
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:theme="@style/Theme.HackDash">
 
-        <receiver android:name="com.tasomaniac.hackerspace.status.StatusToastReceiver">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SECRET_CODE"/>
-                <data android:scheme="android_secret_code" android:host="47"/>
-            </intent-filter>
-        </receiver>
+    <receiver android:name=".StatusToastReceiver">
+      <intent-filter>
+        <action android:name="android.provider.Telephony.SECRET_CODE"/>
+        <data
+          android:host="47"
+          android:scheme="android_secret_code"/>
+      </intent-filter>
+    </receiver>
 
-        <service
-            android:name="com.tasomaniac.hackerspace.status.StatusService"
-            android:icon="@drawable/ic_hackerspace"
-            android:label="@string/dashclock_label"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
-            <intent-filter>
-                <action android:name="com.google.android.apps.dashclock.Extension" />
-            </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="true" />
-            <meta-data android:name="description"
-                android:value="@string/app_description" />
-            <!-- A settings activity is optional -->
-            <meta-data android:name="settingsActivity"
-                android:value=".ui.SettingsActivity" />
-        </service>
+    <service
+      android:name=".StatusService"
+      android:icon="@drawable/ic_hackerspace"
+      android:label="@string/dashclock_label"
+      android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
+      <intent-filter>
+        <action android:name="com.google.android.apps.dashclock.Extension"/>
+      </intent-filter>
 
-        <activity
-          android:name=".ui.SettingsActivity"
-          android:launchMode="singleTask">
+      <meta-data
+        android:name="protocolVersion"
+        android:value="2"/>
+      <meta-data
+        android:name="worldReadable"
+        android:value="true"/>
+      <meta-data
+        android:name="description"
+        android:value="@string/app_description"
+        tools:ignore="ManifestResource"/>
+      <!-- A settings activity is optional -->
+      <meta-data
+        android:name="settingsActivity"
+        android:value=".ui.SettingsActivity"/>
+    </service>
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+    <activity
+      android:name=".ui.SettingsActivity"
+      android:launchMode="singleTop">
 
-        <meta-data
-          android:name="io.fabric.ApiKey"
-          android:value="12d100ee6072b6f8a57cd79b03942ad742ba6916" />
-    </application>
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+
+    <meta-data
+      android:name="io.fabric.ApiKey"
+      android:value="12d100ee6072b6f8a57cd79b03942ad742ba6916"/>
+  </application>
 
 </manifest>

@@ -1,7 +1,7 @@
-package com.tasomaniac.hackerspace.status;
+package com.tasomaniac.dashclock.hackerspace;
 
-import com.tasomaniac.hackerspace.status.ui.IntegrationPreference;
-import com.tasomaniac.hackerspace.status.ui.SettingsFragment;
+import com.tasomaniac.dashclock.hackerspace.ui.IntegrationPreference;
+import com.tasomaniac.dashclock.hackerspace.ui.SettingsFragment;
 
 import javax.inject.Singleton;
 

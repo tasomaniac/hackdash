@@ -1,10 +1,10 @@
-package com.tasomaniac.hackerspace.status.data;
+package com.tasomaniac.dashclock.hackerspace.data;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonReader;
 import com.squareup.moshi.JsonWriter;
-import com.tasomaniac.hackerspace.status.data.model.Directory;
-import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
+import com.tasomaniac.dashclock.hackerspace.data.model.Directory;
+import com.tasomaniac.dashclock.hackerspace.data.model.HackerSpace;
 
 import java.io.IOException;
 

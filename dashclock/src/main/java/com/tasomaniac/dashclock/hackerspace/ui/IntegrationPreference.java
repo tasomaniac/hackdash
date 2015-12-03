@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status.ui;
+package com.tasomaniac.dashclock.hackerspace.ui;
 
 import android.annotation.TargetApi;
 import android.content.ComponentName;
@@ -15,9 +15,9 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 
-import com.tasomaniac.hackerspace.status.App;
-import com.tasomaniac.hackerspace.status.R;
-import com.tasomaniac.hackerspace.status.util.AppInstallEnabler;
+import com.tasomaniac.dashclock.hackerspace.App;
+import com.tasomaniac.dashclock.hackerspace.R;
+import com.tasomaniac.dashclock.hackerspace.util.AppInstallEnabler;
 
 import javax.inject.Inject;
 

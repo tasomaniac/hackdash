@@ -1,4 +1,4 @@
-package com.tasomaniac.hackerspace.status.data.model;
+package com.tasomaniac.dashclock.hackerspace.data.model;
 
 import android.support.annotation.NonNull;
 

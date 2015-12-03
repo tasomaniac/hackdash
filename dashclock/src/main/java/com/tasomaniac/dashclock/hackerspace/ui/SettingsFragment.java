@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tasomaniac.hackerspace.status.ui;
+package com.tasomaniac.dashclock.hackerspace.ui;
 
 import android.app.AlertDialog;
 import android.app.backup.BackupManager;
@@ -30,14 +30,14 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.View;
 import android.widget.Toast;
 
-import com.tasomaniac.hackerspace.status.Analytics;
-import com.tasomaniac.hackerspace.status.App;
-import com.tasomaniac.hackerspace.status.R;
-import com.tasomaniac.hackerspace.status.SpaceApiService;
-import com.tasomaniac.hackerspace.status.StatusService;
-import com.tasomaniac.hackerspace.status.data.HackerSpacePreference;
-import com.tasomaniac.hackerspace.status.data.model.Directory;
-import com.tasomaniac.hackerspace.status.data.model.HackerSpace;
+import com.tasomaniac.dashclock.hackerspace.Analytics;
+import com.tasomaniac.dashclock.hackerspace.App;
+import com.tasomaniac.dashclock.hackerspace.R;
+import com.tasomaniac.dashclock.hackerspace.SpaceApiService;
+import com.tasomaniac.dashclock.hackerspace.StatusService;
+import com.tasomaniac.dashclock.hackerspace.data.HackerSpacePreference;
+import com.tasomaniac.dashclock.hackerspace.data.model.Directory;
+import com.tasomaniac.dashclock.hackerspace.data.model.HackerSpace;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +46,7 @@ import javax.inject.Inject;
 
 import retrofit.Callback;
 import retrofit.Response;
+import retrofit.Retrofit;
 import timber.log.Timber;
 
 public class SettingsFragment extends PreferenceFragmentCompat
@@ -101,7 +102,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
         Timber.d("Directories requested");
         spaceApiService.directory().enqueue(new Callback<Directory>() {
             @Override
-            public void onResponse(Response<Directory> response) {
+            public void onResponse(Response<Directory> response, Retrofit retrofit) {
                 Timber.d("Directories response");
                 if (!response.isSuccess()) {
                     showError();

@@ -1,7 +1,7 @@
-package com.tasomaniac.hackerspace.status;
+package com.tasomaniac.dashclock.hackerspace;
 
-import com.tasomaniac.hackerspace.status.data.model.Directory;
-import com.tasomaniac.hackerspace.status.data.model.SpaceApiResponse;
+import com.tasomaniac.dashclock.hackerspace.data.model.Directory;
+import com.tasomaniac.dashclock.hackerspace.data.model.SpaceApiResponse;
 
 import retrofit.Call;
 import retrofit.http.GET;
