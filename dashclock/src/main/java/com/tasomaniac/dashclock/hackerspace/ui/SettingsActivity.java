@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         collapsingToolbar.setTitle(getString(R.string.settings_label));
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.fragment_container,
                             SettingsFragment.newInstance(fromDashClock))
                     .commit();

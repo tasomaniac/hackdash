@@ -18,19 +18,23 @@ package com.tasomaniac.dashclock.hackerspace.ui;
 
 import android.app.AlertDialog;
 import android.app.backup.BackupManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceFragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v7.preference.ListPreference;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
+import com.tasomaniac.android.widget.IntegrationPreference;
 import com.tasomaniac.dashclock.hackerspace.Analytics;
 import com.tasomaniac.dashclock.hackerspace.App;
 import com.tasomaniac.dashclock.hackerspace.R;
@@ -50,15 +54,16 @@ import retrofit.Response;
 import retrofit.Retrofit;
 import timber.log.Timber;
 
-public class SettingsFragment extends PreferenceFragmentCompat
+public class SettingsFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    @Inject
-    SpaceApiService spaceApiService;
-    @Inject
-    HackerSpacePreference chosenSpacePref;
-    @Inject
-    Analytics analytics;
+    private static final String LAUNCHER_ACTIVITY_NAME = "com.tasomaniac.dashclock.hackerspace.ui.MainActivity";
+
+    @Inject SpaceApiService spaceApiService;
+
+    @Inject HackerSpacePreference chosenSpacePref;
+
+    @Inject Analytics analytics;
 
     private ArrayList<HackerSpace> spaces;
 
@@ -79,15 +84,12 @@ public class SettingsFragment extends PreferenceFragmentCompat
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        App.get(getActivity()).component().inject(this);
 
         if (savedInstanceState == null) {
             analytics.sendScreenView("Settings Page");
         }
-    }
 
-    @Override
-    public void onCreatePreferences(Bundle bundle, String s) {
-        App.get(getActivity()).component().inject(this);
         addPreferencesFromResource(R.xml.pref_general);
 
         spacesListPreference = (ListPreference) findPreference(R.string.pref_key_space_name);
@@ -96,9 +98,10 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
         dashclockPref = (IntegrationPreference) findPreference(R.string.pref_key_dashclock_integration);
 
+        PreferenceCategory integrations = (PreferenceCategory) findPreference(R.string.pref_key_integrations);
         boolean fromDashClock = getArguments().getBoolean(DashClockExtension.EXTRA_FROM_DASHCLOCK_SETTINGS, false);
-        if (fromDashClock) {
-            dashclockPref.setVisible(false);
+        if (integrations != null && fromDashClock) {
+            integrations.removePreference(dashclockPref);
         }
     }
 
@@ -187,6 +190,22 @@ public class SettingsFragment extends PreferenceFragmentCompat
             getActivity().sendBroadcast(new Intent(StatusService.SETTINGS_CHANGED_EVENT));
             analytics.sendEvent("Settings", "Chosen Space",
                     chosenSpacePref.getHackerSpace().toString());
+        }
+
+        // Potentially enable/disable the launcher activity if the settings button
+        // preference has changed.
+        final String launcherIntentKey = getString(R.string.pref_key_launcher_intent);
+        if (isAdded() && launcherIntentKey.equals(s)) {
+
+            final boolean hideLauncher = sharedPreferences.getBoolean(launcherIntentKey, false);
+            getActivity().getPackageManager().setComponentEnabledSetting(
+                    new ComponentName(
+                            getActivity().getPackageName(),
+                            LAUNCHER_ACTIVITY_NAME),
+                    hideLauncher
+                            ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                            : PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
         }
     }
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.tasomaniac.dashclock.hackerspace"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest
+  package="com.tasomaniac.dashclock.hackerspace"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -47,13 +48,20 @@
         android:value=".ui.SettingsActivity"/>
     </service>
 
-    <activity android:name=".ui.SettingsActivity">
+    <activity
+      android:name=".ui.SettingsActivity"
+      android:exported="true"
+      android:launchMode="singleTask"/>
 
+    <activity-alias
+      android:name=".ui.MainActivity"
+      android:enabled="true"
+      android:targetActivity=".ui.SettingsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
-    </activity>
+    </activity-alias>
 
     <meta-data
       android:name="io.fabric.ApiKey"

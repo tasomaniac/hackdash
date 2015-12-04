@@ -1,6 +1,6 @@
 package com.tasomaniac.dashclock.hackerspace;
 
-import com.tasomaniac.dashclock.hackerspace.ui.IntegrationPreference;
+import com.tasomaniac.android.widget.IntegrationPreference;
 import com.tasomaniac.dashclock.hackerspace.ui.SettingsFragment;
 
 import javax.inject.Singleton;

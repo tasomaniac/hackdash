@@ -21,7 +21,11 @@
 
     <string name="settings_label">HackDash Settings</string>
 
+    <string name="pref_key_category_general" translatable="false">pref_category_general</string>
+    <string name="pref_title_general">General</string>
+
     <string name="pref_title_integrations">Integrations</string>
+    <string name="pref_key_integrations" translatable="false">pref_integrations</string>
     <string name="pref_key_dashclock_integration" translatable="false">pref_dashclock_integration</string>
     <string name="pref_title_dashclock_integration">DashClock App Integration</string>
     <string name="pref_summary_dashclock_installed">Open DashClock settings to add "Hackerspace Status".</string>
@@ -29,6 +33,11 @@
 
     <string name="pref_key_space_name" translatable="false">space_name</string>
     <string name="pref_key_space_url" translatable="false">space_url</string>
+
+    <string name="pref_key_launcher_intent" translatable="false">pref_launcher_intent</string>
+    <string name="pref_title_launcher_intent">Hide App Icon</string>
+    <string name="pref_summary_launcher_intent_on">App icon is hidden.</string>
+    <string name="pref_summary_launcher_intent_off">App icon is visible on homescreen.</string>
 
 
 </resources>

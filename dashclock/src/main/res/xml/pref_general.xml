@@ -17,19 +17,34 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   >
 
-  <ListPreference
-    android:key="@string/pref_key_space_name"
-    android:enabled="false"
-    android:dependency="@string/pref_key_dashclock_integration"
-    android:title="@string/settings_choose_title"
-    android:summary="@string/settings_choose_message"/>
 
 
   <PreferenceCategory
-    android:title="@string/pref_title_integrations">
+    android:dependency="@string/pref_key_dashclock_integration"
+    android:key="@string/pref_key_category_general"
+    android:title="@string/pref_title_general">
+
+    <ListPreference
+      android:key="@string/pref_key_space_name"
+      android:enabled="false"
+      android:dependency="@string/pref_key_dashclock_integration"
+      android:title="@string/settings_choose_title"
+      android:summary="@string/settings_choose_message"/>
+
+    <CheckBoxPreference
+      android:key="@string/pref_key_launcher_intent"
+      android:defaultValue="false"
+      android:title="@string/pref_title_launcher_intent"
+      android:summaryOn="@string/pref_summary_launcher_intent_on"
+      android:summaryOff="@string/pref_summary_launcher_intent_off"/>
+  </PreferenceCategory>
+
+  <PreferenceCategory
+    android:title="@string/pref_title_integrations"
+    android:key="@string/pref_key_integrations">
 
     <!-- dashclock App Check Preference-->
-    <com.tasomaniac.dashclock.hackerspace.ui.IntegrationPreference
+    <com.tasomaniac.android.widget.IntegrationPreference
       android:key="@string/pref_key_dashclock_integration"
       android:persistent="false"
       android:defaultValue="true"
@@ -39,7 +54,7 @@
       <intent
         android:targetClass="com.google.android.apps.dashclock.configuration.ConfigurationActivity"
         android:targetPackage="net.nurik.roman.dashclock"/>
-    </com.tasomaniac.dashclock.hackerspace.ui.IntegrationPreference>
+    </com.tasomaniac.android.widget.IntegrationPreference>
 
   </PreferenceCategory>
 

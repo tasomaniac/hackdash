@@ -16,11 +16,16 @@
     <string name="error_title">Hata!</string>
     <string name="error_message">Hackerspaces listesi alınırken hata</string>
     <string name="done">Bitti</string>
+
+    <string name="pref_title_general">Genel</string>
     <string name="pref_summary_dashclock_installed">DashClock ayarlarını açıp "Hackerspace Status"ü ekleyiniz.</string>
     <string name="pref_summary_dashclock_not_installed">DashClock uygulamasını indirmek için tıklayın!</string>
     <string name="pref_title_dashclock_integration">DashClock Entegrasyonu</string>
     <string name="pref_title_integrations">Entegrasyonlar</string>
     <string name="settings_label">HackDash Ayarlar</string>
+    <string name="pref_summary_launcher_intent_off">Uyg ikonu ana ekranda görünür.</string>
+    <string name="pref_summary_launcher_intent_on">Uyg ikonu gizli.</string>
+    <string name="pref_title_launcher_intent">Uyg Ikonunu Gizle</string>
 
 
 </resources>

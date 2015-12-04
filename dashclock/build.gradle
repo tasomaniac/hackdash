@@ -54,7 +54,7 @@ android {
 
         release {
             minifyEnabled true
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -90,7 +90,6 @@ dependencies {
 
     compile "com.android.support:support-v4:$supportLibVersion"
     compile "com.android.support:appcompat-v7:$supportLibVersion"
-    compile "com.android.support:preference-v14:$supportLibVersion"
     compile "com.android.support:design:$supportLibVersion"
 
     compile "com.google.android.gms:play-services-analytics:8.3.0"
@@ -102,6 +101,7 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
     compile 'com.tasomaniac:contentloadingprogressdialog:0.2'
+    compile 'com.tasomaniac:integrationpreference:0.2'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.4@aar') {
         transitive = true
