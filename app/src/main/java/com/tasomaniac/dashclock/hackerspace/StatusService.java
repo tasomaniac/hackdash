@@ -118,11 +118,11 @@ public class StatusService extends DashClockExtension {
 
                         long when = state.getLastchange() * 1000;
                         if (DateUtils.isToday(when)) {
-                            message.append(DateFormat.getTimeInstance(DateFormat.MEDIUM)
+                            message.append(DateFormat.getTimeInstance(DateFormat.SHORT)
                                     .format(new Date(when)));
                         } else {
-                            message.append(DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
-                                    DateFormat.MEDIUM).format(new Date(when)));
+                            message.append(DateFormat.getDateTimeInstance(DateFormat.SHORT,
+                                    DateFormat.SHORT).format(new Date(when)));
                         }
                     }
 
