@@ -38,6 +38,7 @@
     <string name="pref_title_launcher_intent">Hide App Icon</string>
     <string name="pref_summary_launcher_intent_on">App icon is hidden.</string>
     <string name="pref_summary_launcher_intent_off">App icon is visible on homescreen.</string>
+    <string name="error_install_dashclock">Please install DashClock App first!</string>
 
 
 </resources>

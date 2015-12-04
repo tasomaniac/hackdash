@@ -1,16 +1,18 @@
 package com.tasomaniac.dashclock.hackerspace.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.tasomaniac.dashclock.hackerspace.R;
 
 public class SettingsActivity extends AppCompatActivity {
-
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,13 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if (prefs.getBoolean(getString(R.string.pref_key_dashclock_integration), false)) {
+                Toast.makeText(this, R.string.error_install_dashclock, Toast.LENGTH_LONG).show();
+            } else {
+                finish();
+            }
             return true;
         }
 

@@ -26,6 +26,7 @@
     <string name="pref_summary_launcher_intent_off">Uyg ikonu ana ekranda görünür.</string>
     <string name="pref_summary_launcher_intent_on">Uyg ikonu gizli.</string>
     <string name="pref_title_launcher_intent">Uyg Ikonunu Gizle</string>
+    <string name="error_install_dashclock">Lütfen önce DashClock uygulamasını yükleyiniz!</string>
 
 
 </resources>

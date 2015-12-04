@@ -28,7 +28,6 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.Toast;
@@ -97,10 +96,16 @@ public class SettingsFragment extends PreferenceFragment
                 spacesListPreference, chosenSpacePref.getHackerSpace().space);
 
         dashclockPref = (IntegrationPreference) findPreference(R.string.pref_key_dashclock_integration);
+        dashclockPref.setPersistent(true);
 
+        removeDashClockPrefIfNotNecessary();
+    }
+
+    private void removeDashClockPrefIfNotNecessary() {
+        //Remove dashclock pref if the user is coming from DashClock app.
         PreferenceCategory integrations = (PreferenceCategory) findPreference(R.string.pref_key_integrations);
         boolean fromDashClock = getArguments().getBoolean(DashClockExtension.EXTRA_FROM_DASHCLOCK_SETTINGS, false);
-        if (integrations != null && fromDashClock) {
+        if (fromDashClock) {
             integrations.removePreference(dashclockPref);
         }
     }
@@ -157,7 +162,6 @@ public class SettingsFragment extends PreferenceFragment
         }
     }
 
-    @Nullable
     public Preference findPreference(@StringRes int keyResource) {
         return findPreference(getString(keyResource));
     }
