@@ -43,14 +43,13 @@ import com.tasomaniac.dashclock.hackerspace.data.HackerSpacePreference;
 import com.tasomaniac.dashclock.hackerspace.data.model.Directory;
 import com.tasomaniac.dashclock.hackerspace.data.model.HackerSpace;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.inject.Inject;
-
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import timber.log.Timber;
 
 public class SettingsFragment extends PreferenceFragment
@@ -116,10 +115,11 @@ public class SettingsFragment extends PreferenceFragment
 
         Timber.d("Directories requested");
         spaceApiService.directory().enqueue(new Callback<Directory>() {
+
             @Override
-            public void onResponse(Response<Directory> response, Retrofit retrofit) {
+            public void onResponse(Call<Directory> call, Response<Directory> response) {
                 Timber.d("Directories response");
-                if (!response.isSuccess()) {
+                if (!response.isSuccessful()) {
                     showError();
                     return;
                 }
@@ -141,7 +141,7 @@ public class SettingsFragment extends PreferenceFragment
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<Directory> call, Throwable t) {
                 showError();
             }
         });

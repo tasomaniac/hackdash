@@ -16,15 +16,14 @@ import com.tasomaniac.dashclock.hackerspace.data.model.SpaceApiResponse;
 import com.tasomaniac.dashclock.hackerspace.data.model.State;
 import com.tasomaniac.dashclock.hackerspace.ui.SettingsActivity;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 
-import javax.inject.Inject;
-
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import timber.log.Timber;
 
 public class StatusService extends DashClockExtension {
@@ -83,9 +82,10 @@ public class StatusService extends DashClockExtension {
                     .clickIntent(new Intent(this, SettingsActivity.class)));
         } else {
             spaceApiService.spaceStatus(chosenSpace.url).enqueue(new Callback<SpaceApiResponse>() {
+
                 @Override
-                public void onResponse(Response<SpaceApiResponse> response, Retrofit retrofit) {
-                    if (!response.isSuccess()) {
+                public void onResponse(Call<SpaceApiResponse> call, Response<SpaceApiResponse> response) {
+                    if (!response.isSuccessful()) {
                         try {
                             Timber.e("Network Error %s", response.errorBody().string());
                         } catch (IOException ignored) {
@@ -125,8 +125,6 @@ public class StatusService extends DashClockExtension {
                                     DateFormat.SHORT).format(new Date(when)));
                         }
                     }
-
-//                  String logo = jsonObject.optString("logo"); //TODO try to integrate this logo
                     publishHSUpdate(status,
                             body.getSpace(),
                             message.toString(),
@@ -138,7 +136,7 @@ public class StatusService extends DashClockExtension {
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFailure(Call<SpaceApiResponse> call, Throwable t) {
                     Timber.d(t, "Network error. ");
                 }
             });

@@ -27,7 +27,9 @@ public class App extends Application {
     }
 
     public void buildComponentAndInject() {
-        component = HackDashComponent.Initializer.init(this);
+        component = DaggerHackDashComponent.builder()
+                .application(this)
+                .build();
         component.inject(this);
     }
 
@@ -38,7 +40,6 @@ public class App extends Application {
     public static App get(Context context) {
         return (App) context.getApplicationContext();
     }
-
 
     /** A tree which logs important information for crash reporting. */
     private static class CrashReportingTree extends Timber.Tree {

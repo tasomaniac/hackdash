@@ -1,5 +1,7 @@
 package com.tasomaniac.dashclock.hackerspace;
 
+import android.app.Application;
+
 import com.tasomaniac.android.widget.IntegrationPreference;
 import com.tasomaniac.dashclock.hackerspace.ui.SettingsFragment;
 
@@ -8,7 +10,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = { AppModule.class })
+@Component(modules = AppModule.class, dependencies = Application.class)
 public interface HackDashComponent {
 
     void inject(App app);
@@ -21,11 +23,6 @@ public interface HackDashComponent {
      * An initializer that creates the graph from an application.
      */
     final class Initializer {
-        static HackDashComponent init(App app) {
-            return DaggerHackDashComponent.builder()
-                    .appModule(new AppModule(app))
-                    .build();
-        }
         private Initializer() {} // No instances.
     }
 }

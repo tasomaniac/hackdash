@@ -11,9 +11,9 @@ import com.tasomaniac.dashclock.hackerspace.data.model.SpaceApiResponse;
 
 import javax.inject.Inject;
 
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class StatusToastReceiver extends BroadcastReceiver {
 
@@ -32,9 +32,10 @@ public class StatusToastReceiver extends BroadcastReceiver {
         }
 
         spaceApiService.spaceStatus(url).enqueue(new Callback<SpaceApiResponse>() {
+
             @Override
-            public void onResponse(Response<SpaceApiResponse> response, Retrofit retrofit) {
-                if (response.isSuccess()) {
+            public void onResponse(Call<SpaceApiResponse> call, Response<SpaceApiResponse> response) {
+                if (response.isSuccessful()) {
                     final SpaceApiResponse body = response.body();
                     final String name = body.getSpace();
                     final Boolean open = body.getState().isOpen();
@@ -48,7 +49,7 @@ public class StatusToastReceiver extends BroadcastReceiver {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<SpaceApiResponse> call, Throwable t) {
             }
         });
     }
