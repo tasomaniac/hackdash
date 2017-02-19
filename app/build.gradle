@@ -18,8 +18,8 @@ android {
         applicationId "com.tasomaniac.dashclock.hackerspace"
         minSdkVersion 17
         targetSdkVersion rootProject.ext.compileSdkVersion
-        versionCode rootProject.ext.versionMajor * 10000 + rootProject.ext.versionMinor * 1000 + rootProject.ext.versionPatch * 100 + rootProject.ext.versionBuild
-        versionName "${rootProject.ext.versionMajor}.${rootProject.ext.versionMinor}" + ((rootProject.ext.versionPatch != 0) ? ".${rootProject.ext.versionPatch}" : "")
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
 
@@ -57,6 +57,14 @@ android {
         }
     }
 
+    productFlavors {
+        floss {
+            applicationIdSuffix '.floss'
+            versionName "${rootProject.ext.versionName}-floss"
+        }
+        play {}
+    }
+
     lintOptions {
         abortOnError true
         textReport true
@@ -87,6 +95,6 @@ dependencies {
     compile 'com.tasomaniac:delayed-progress:0.4'
     compile 'com.tasomaniac:integrationpreference:0.2'
 
-    compile 'com.google.android.gms:play-services-analytics:10.2.0'
-    compile 'com.crashlytics.sdk.android:crashlytics:2.6.6'
+    playCompile 'com.google.android.gms:play-services-analytics:10.2.0'
+    playCompile 'com.crashlytics.sdk.android:crashlytics:2.6.6'
 }

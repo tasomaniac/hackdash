@@ -10,19 +10,19 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = AppModule.class, dependencies = Application.class)
+@Component(
+        modules = {
+                AppModule.class,
+                AnalyticsModule.class
+        }, dependencies = Application.class)
 public interface HackDashComponent {
 
-    void inject(App app);
     void inject(StatusService service);
+
     void inject(StatusToastReceiver receiver);
+
     void inject(IntegrationPreference integrationPreference);
+
     void inject(SettingsFragment fragment);
 
-    /**
-     * An initializer that creates the graph from an application.
-     */
-    final class Initializer {
-        private Initializer() {} // No instances.
-    }
 }

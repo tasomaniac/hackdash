@@ -4,8 +4,6 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 import com.squareup.moshi.Moshi;
 import com.tasomaniac.dashclock.hackerspace.data.ChosenHackerSpaceName;
 import com.tasomaniac.dashclock.hackerspace.data.ChosenHackerSpaceUrl;
@@ -108,18 +106,5 @@ final class AppModule {
     @Singleton
     SpaceApiService provideSpaceApiService(Retrofit retrofit) {
         return retrofit.create(SpaceApiService.class);
-    }
-
-    @Provides
-    @Singleton
-    Analytics provideAnalytics(Application app) {
-        if (BuildConfig.DEBUG) {
-            return new Analytics.DebugAnalytics();
-        }
-
-        GoogleAnalytics googleAnalytics = GoogleAnalytics.getInstance(app);
-        Tracker tracker = googleAnalytics.newTracker(BuildConfig.ANALYTICS_KEY);
-        tracker.setSessionTimeout(300); // ms? s? better be s.
-        return new Analytics.GoogleAnalytics(tracker);
     }
 }
