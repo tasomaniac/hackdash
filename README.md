@@ -1,5 +1,5 @@
 HackDash
-==================
+========
 
 [![Build Status](https://travis-ci.org/tasomaniac/hackdash.png?branch=master)](https://travis-ci.org/tasomaniac/hackdash)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
