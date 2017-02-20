@@ -28,5 +28,9 @@ proguard/
 *.iws
 .idea/
 .gradle
-my-release-key.keystore
-build
+/build
+
+*.keystore
+*.signing
+*.p12
+secrets.properties
