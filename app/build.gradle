@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.novoda.build-properties'
+apply plugin: 'com.github.triplet.play'
 apply plugin: 'io.fabric'
 
-Properties local_properties = new Properties()
-File localPropertiesFile = project.rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    local_properties.load(localPropertiesFile.newDataInputStream())
+def signingFile = file('props/release.signing')
+buildProperties {
+    signing.file signingFile.exists() ? signingFile : file('props/debug.signing')
+    secrets.file file('props/secrets.properties')
 }
 
+def secrets = buildProperties.secrets
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 
 android {
@@ -30,16 +33,8 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file("../distribution/debug.keystore")
-        }
-
-        release {
-            storeFile file("../distribution/" + (local_properties.release_keystore_name ?: "debug.keystore"))
-            keyAlias(local_properties.release_keystore_alias ?: "androiddebugkey")
-            storePassword(local_properties.release_keystore_pwd ?: "android")
-            keyPassword(local_properties.release_keystore_pwd2 ?: "android")
-        }
+        debug.storeFile file('props/debug.keystore')
+        release.signingConfigProperties buildProperties.signing
     }
 
     buildTypes {
@@ -66,7 +61,6 @@ android {
     }
 
     lintOptions {
-        abortOnError true
         textReport true
         textOutput 'stdout'
 
@@ -75,8 +69,15 @@ android {
     }
 }
 
+play {
+    serviceAccountEmail = secrets['play_service_account'].or('').string
+    pk12File = file(secrets['play_key_file'].or('no_file.p12').string)
+    track = 'beta'
+}
+
 dependencies {
     def supportLibVersion = '25.1.1'
+    def daggerVersion = '2.9'
 
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
 
@@ -89,8 +90,8 @@ dependencies {
 
     compile 'com.jakewharton.timber:timber:4.5.1'
 
-    compile 'com.google.dagger:dagger:2.9'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    compile "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     compile 'com.tasomaniac:delayed-progress:0.4'
     compile 'com.tasomaniac:integrationpreference:0.2'
