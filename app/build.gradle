@@ -25,9 +25,7 @@ android {
         versionName rootProject.ext.versionName
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
-
-        buildConfigField "String", "ANALYTICS_KEY", local_properties.analytics_key != null ?
-                "\"" + local_properties.analytics_key + "\"" : "\"\""
+        buildConfigProperty "ANALYTICS_KEY", secrets['analytics_key'] | ''
 
         resConfigs "en", "tr"
     }
