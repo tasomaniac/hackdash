@@ -30,7 +30,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 @Module
 final class AppModule {
 
-    private static final HttpUrl BASE_API_URL = HttpUrl.parse("http://spaceapi.net/");
+    private static final HttpUrl BASE_API_URL = HttpUrl.parse("https://spaceapi.fixme.ch");
 
     @Provides
     SharedPreferences provideSharedPreferences(Application app) {
