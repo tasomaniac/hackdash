@@ -1,8 +1,5 @@
 package com.tasomaniac.dashclock.hackerspace.data.model;
 
-/**
- * Created by tasomaniac on 9/9/15.
- */
 public class SpaceApiResponse {
 
     private String space;
