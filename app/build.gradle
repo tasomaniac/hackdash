@@ -74,7 +74,7 @@ play {
 }
 
 dependencies {
-    def supportLibVersion = '25.1.1'
+    def supportLibVersion = '25.2.0'
     def daggerVersion = '2.9'
 
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
