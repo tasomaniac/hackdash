@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="dashclock_label">Hackerspace ステータス</string>
+    <string name="app_description">好きな HackerSpace を選択してオープンしてご覧ください。</string>
+
+    <string name="status_message">Hackerspace は %1$s</string>
+    <string name="unknown">不明</string>
+    <string name="open">オープン</string>
+    <string name="closed">クローズ</string>
+
+    <string name="done">完了</string>
+
+    <string name="setup">セットアップ</string>
+    <string name="settings_choose_title">Hackerspace を選択</string>
+    <string name="settings_choose_message">ここをクリックして Hackerspace を選択してください!</string>
+
+    <string name="error_title">エラー!</string>
+    <string name="error_message">Hackerspaces のリストを取得中にエラーが発生しました。</string>
+
+    <string name="settings_label">HackDash 設定</string>
+
+    <string name="pref_title_general">全般</string>
+
+    <string name="pref_title_integrations">統合</string>
+    <string name="pref_title_dashclock_integration">DashClock アプリ統合</string>
+    <string name="pref_summary_dashclock_installed">DashClock 設定を開いて "Hackerspace ステータス" を追加します。</string>
+    <string name="pref_summary_dashclock_not_installed">ここをクリックして DashClock ウィジェットをインストールし、その後 DashClock の中でこのアプリを有効にします。</string>
+
+    <string name="pref_title_launcher_intent">アプリのアイコンを非表示</string>
+    <string name="pref_summary_launcher_intent_on">アプリのアイコンは非表示です。</string>
+    <string name="pref_summary_launcher_intent_off">アプリのアイコンはホーム画面に表示されます。</string>
+    <string name="error_install_dashclock">最初に DashClock アプリをインストールしてください!</string>
+
+
+</resources>
