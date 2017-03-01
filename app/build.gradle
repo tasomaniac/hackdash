@@ -18,16 +18,16 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "com.tasomaniac.dashclock.hackerspace"
+        applicationId 'com.tasomaniac.dashclock.hackerspace'
         minSdkVersion 17
         targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
-        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
-        buildConfigProperty "ANALYTICS_KEY", secrets['analytics_key'] | ''
+        buildConfigField 'String', 'GIT_SHA', "\"${gitSha}\""
+        buildConfigProperty 'ANALYTICS_KEY', secrets['analytics_key'] | ''
 
-        resConfigs "en", "tr"
+        resConfigs 'en', 'ja', 'tr'
     }
 
     signingConfigs {
