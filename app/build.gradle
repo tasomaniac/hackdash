@@ -53,7 +53,7 @@ android {
     productFlavors {
         floss {
             applicationIdSuffix '.floss'
-            versionName "${rootProject.ext.versionName}-floss"
+            versionNameSuffix '-floss'
         }
         play {}
     }
