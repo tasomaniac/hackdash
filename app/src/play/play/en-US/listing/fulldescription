@@ -1,0 +1,30 @@
+DashClock extension that shows the open/close status of your chosen hackerspace.
+
+<b>What is Hackerspace?</b>
+A hackerspace (also referred to as a hacklab, makerspace, or hackspace) is a community-operated workspace where people with common interests, often in computers, technology, science, digital art or electronic art, can meet, socialize and/or collaborate.
+
+<b>SpaceAPI</b>
+This application makes use of the SpaceAPI. You can see more information about SpaceAPI here http://spaceapi.net
+The purpose of the Space API is to define a unified specification across the hackerspaces that can be used to expose information to web apps or any other application.
+
+<b>IMPORTANT:</b>
+• This is an extension for DashClock Widget (http://goo.gl/WY8yBD), not a stand-alone app
+• The app is only available for Android 4.2+ since the DashClock itself is also available for Android 4.2+
+
+<b>Setup:</b>
+1. Install DashClock Widget (http://goo.gl/WY8yBD)
+2. Add an instance of DashClock Widget to your lock screen or home screen 
+3. Open DashClock settings and add the extension "HackDash"
+4. Open the extension's settings from DashClock settings and choose your hackerspace from the list. 
+
+<b>Screet Door</b>
+You can also see the status of your hackerspace by dialing *#*#47#*#* on your phone's dial pad. Look at the initials of the word hackerspace if you forgot the number 47 ;)
+
+The application is open source and licensed under Apache License 2.0
+https://github.com/tasomaniac/spaceapi_dashclock
+
+• Please report bugs on <b>github</b>
+• Please rate, review, use and share the app :)
+
+Brought to you by <b>Said Tahsin Dane</b> of <b>Istanbul Hackerspace</b>
+If you run into problems, feel free to contact me via email.

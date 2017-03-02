@@ -1,0 +1,6 @@
+- Fix the SpaceAPI endpoint.
+  We are now using https://spaceapi.fixme.ch/ as the API.
+
+- Japanese translation added
+
+Happy hacking...
