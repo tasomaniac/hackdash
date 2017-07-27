@@ -9,7 +9,11 @@ HackDash
 Installation
 ------------
 
-[![Get it on Google Play](art/en_generic_rgb_wo_60.png)][1]
+<a href="https://f-droid.org/packages/com.tasomaniac.dashclock.hackerspace.floss/" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="100"/></a>
+<a href="https://play.google.com/store/apps/details?id=com.tasomaniac.dashclock.hackerspace" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="100"/></a>
+
 
 What
 ----
@@ -33,7 +37,3 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
-
-
-[1]: https://play.google.com/store/apps/details?id=com.tasomaniac.dashclock.hackerspace
